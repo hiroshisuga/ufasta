@@ -124,8 +124,12 @@ int split_main(int argc, char* argv[]) {
     }
 
     for(auto& pipe : pipes) {
+      if (pipe.fd == -1) {
+        pipe.close(); 
+      } else {
       if(FD_ISSET(pipe.fd, &output_set) && !pipe.append_sequence(input))
         pipe.close();
+      }
     }
   }
 
